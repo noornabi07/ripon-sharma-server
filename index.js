@@ -31,10 +31,18 @@ async function run() {
     const reviewCollection = client.db("riponDb").collection("reviews");
     const teamCollection = client.db("riponDb").collection("teams");
 
+    // Review setting start here
     app.get('/review', async(req, res) =>{
         const result = await reviewCollection.find().toArray();
         res.send(result);
     })
+
+    app.post('/addreview', async(req, res) =>{
+      const newReview = req.body;
+      const result = await reviewCollection.insertOne(newReview);
+      res.send(result);
+    })
+    // Review setting end here
 
     app.get('/team', async(req, res) =>{
         const result = await teamCollection.find().toArray();
